@@ -27,13 +27,14 @@ Set the messenger to consume request:
 ```bash
 symfony console messenger:consume async
 ```
-This command can be added as cron job.
 
 ## Usage
 To initiate news parsing, call the `news:start-parsing` command:
 ```bash
 symfony console news:start-parsing
 ```
+This command can be added as cron job.
+
 
 To view processed news articles, start symfony server with:
 ```bash
