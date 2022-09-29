@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="container my-5 text-center col-md-4 col-sm-10">
+    
+		<h1>Login Page</h1>
+
+		<p>Choose a login type:</p>
+
+		<div class="d-flex flex-column gutter-3">
+			<a class="btn btn-primary m-1" href="{{ path('login-as-admin') }}">Login as Administrator</a>
+			<a class="btn btn-secondary m-1" href="{{ path('login-as-moderator') }}">Login as Moderator</a>
+		</div>
+
+	</div>
+{% endblock %}

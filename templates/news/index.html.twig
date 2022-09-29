@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News Feed!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.picture {
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+		}
+	</style>
+	<div class="container mt-4">
+
+		<h1 class="text-center">News Feed!</h1>
+		<p class="text-center">Source:
+			<a target="_blank" href="https://highload.today/category/novosti/">https://highload.today/category/novosti/</a>
+		</p>
+		<div>
+			<h5 class="text-center">
+				<hr/>
+				Logged in as
+				<span class="text-capitalize">{{app.session.get('role')}}</span>
+				<a class="btn btn-sm btn-danger" href="{{path('logout')}}">Logout</a>
+				<hr/>
+			</h5>
+		</div>
+
+		<div class="my-4">
+			{% if news|length > 0 %}
+				{% for article in news %}
+					<div class="card mb-4 shadow-lg" style="">
+						<div class="row g-0">
+							<div class="col-md-5 picture" style="background-image:url('{{article.picture}}');"></div>
+							<div class="col-md-7">
+								<div class="card-body">
+									<h5 class="card-title">{{article.title}}</h5>
+									<p class="card-text">{{article.description}}</p>
+								<p class="card-text">
+										<small class="text-muted">
+											<span>Created at
+												{{article.dateCreated|format_datetime('medium', 'short')}}</span>
+											{% if article.dateModified %}
+												<span>
+													- Last modified at
+													{{article.dateModified|format_datetime('medium', 'short')}}</span>
+											{% endif %}
+										</small>
+										{% if app.session.get('role') == 'admin' %}
+											{{ include('news/_delete_form.html.twig') }}
+										{% endif %}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+				{# Pagination #}
+				<nav aria-label="News page navigation" class="d-flex justify-content-center mb-5">
+					<ul class="pagination">
+						{% if previous >= 0 %}
+							<li class="page-item">
+								<a class="page-link" href="{{ path('app_news_index', { offset: previous }) }}">Previous</a>
+							</li>
+						{% endif %}
+						{% if next < news|length %}
+							<li class="page-item">
+								<a class="page-link" href="{{ path('app_news_index', { offset: next }) }}">Next</a>
+							</li>
+						{% endif %}
+					</ul>
+				</nav>
+			{% else %}
+				<div class="text-center py-5">No news articles have been saved yet.</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
